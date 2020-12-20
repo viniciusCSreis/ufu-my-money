@@ -1,0 +1,21 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:9.4
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=my_money
+      - POSTGRES_USER=my_money
+      - POSTGRES_PASSWORD=my_money
+      - MAX_CONNECTIONS=300
+    volumes:
+      - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+networks:
+  compose_stubby:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.68.68.1/24
