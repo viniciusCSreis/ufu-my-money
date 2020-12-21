@@ -39,8 +39,6 @@ class GoalsFetcher {
   }
 
   update(GoalsRequest request, String id) async {
-    var d = request.description;
-    print("request.d=$d");
     final response = await http.put("$ServerUrl/goals/$id",
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

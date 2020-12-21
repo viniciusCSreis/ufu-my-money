@@ -25,7 +25,7 @@ public class GoalsServiceImpl implements GoalsService {
 
     @Override
     public List<GoalsResponse> List(User logged) {
-        List<Goal> goals = goalsRepository.findAllByUser_Cpf(logged.getCpf());
+        List<Goal> goals = goalsRepository.findAllByUser_CpfOrderByDataDesc(logged.getCpf());
         return goals.stream().map(this::toResponse).collect(Collectors.toList());
     }
 

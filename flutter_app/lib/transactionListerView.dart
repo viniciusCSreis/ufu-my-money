@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/goalsFetcher.dart';
 import 'package:flutter_app/goalsManagerView.dart';
-import 'package:flutter_app/goalsResponse.dart';
+import 'package:flutter_app/transactionFetcher.dart';
+import 'package:flutter_app/transactionModifierView.dart';
+import 'package:flutter_app/transactionResponse.dart';
 import 'package:intl/intl.dart';
 
-
-class ListGoalsView extends StatefulWidget {
+class TransactionListerView extends StatefulWidget {
   @override
-  _ListGoalsViewState createState() => _ListGoalsViewState();
+  _TransactionListerViewState createState() => _TransactionListerViewState();
 }
 
-class _ListGoalsViewState extends State<ListGoalsView> {
-  Future<List<GoalsResponse>> goalsResponse;
-  var fetcher = GoalsFetcher();
+class _TransactionListerViewState extends State<TransactionListerView> {
+  Future<List<TransactionResponse>> transactionsResponse;
   DateFormat dateFormat = DateFormat('dd-MM-yy');
-
+  var fetcher = TransactionFetcher();
 
   @override
   void initState() {
-    goalsResponse = fetcher.list();
+    transactionsResponse = fetcher.list();
     super.initState();
   }
 
   @override
   void setState(fn) {
-    goalsResponse = fetcher.list();
+    transactionsResponse = fetcher.list();
     super.setState(fn);
   }
 
@@ -32,13 +31,13 @@ class _ListGoalsViewState extends State<ListGoalsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Metas"),
+        title: Text("Transações"),
         actions: [
           IconButton(
             icon: Icon(Icons.add),
             onPressed: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => GoalsManagerView(null)),
+              MaterialPageRoute(builder: (context) => TransactionModifierView(null)),
             ).then((value) {
               setState(() {});
             }),
@@ -46,17 +45,27 @@ class _ListGoalsViewState extends State<ListGoalsView> {
         ],
       ),
       body: Center(
-        child: FutureBuilder<List<GoalsResponse>>(
-            future: goalsResponse,
+        child: FutureBuilder<List<TransactionResponse>>(
+            future: transactionsResponse,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
                     itemCount: snapshot.data.length,
                     itemBuilder: (context, index) {
-                      GoalsResponse goal = snapshot.data.elementAt(index);
+                      TransactionResponse transaction = snapshot.data.elementAt(index);
+                      var textColor = Colors.green;
+                      if ( transaction.type == TransactionType.Despesa.toString().split('.').last) {
+                        textColor = Colors.red;
+                      }
                       return ListTile(
-                        title: Text(dateFormat.format(goal.data) + "\nR\$ " + goal.value.toString()),
-                        subtitle: Text(goal.description),
+                        title: Text(
+                            "R\$ " + transaction.value.toString(),
+                            style: TextStyle(color: textColor)
+                        ),
+                        subtitle: Text(
+                            dateFormat.format(transaction.data) + "\n" + transaction.description,
+                            style: TextStyle(color: textColor)
+                        ),
                         trailing: Container(
                           width: 100,
                           child: Row(
@@ -64,10 +73,10 @@ class _ListGoalsViewState extends State<ListGoalsView> {
                               IconButton(
                                 icon: Icon(Icons.edit),
                                 onPressed: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                GoalsManagerView(goal)))
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            TransactionModifierView(transaction)))
                                     .then((value) {
                                   setState(() {});
                                 }),
@@ -75,7 +84,7 @@ class _ListGoalsViewState extends State<ListGoalsView> {
                               IconButton(
                                   icon: Icon(Icons.delete),
                                   onPressed: () async {
-                                    await fetcher.delete(goal.id);
+                                    await fetcher.delete(transaction.id);
                                     setState(() {});
                                   }),
                             ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/goalsRequest.dart';
+import 'package:intl/intl.dart';
 
 import 'goalsFetcher.dart';
 import 'goalsResponse.dart';
@@ -17,6 +18,7 @@ class GoalsManagerView extends StatefulWidget {
 class _GoalsManagerViewState extends State<GoalsManagerView> {
   final _form = GlobalKey<FormState>();
   var fetcher = GoalsFetcher();
+  DateFormat dateFormat = DateFormat('dd-MM-yy');
 
   DateTime _selectedDate;
   TextEditingController _textEditingController = TextEditingController();
@@ -29,7 +31,7 @@ class _GoalsManagerViewState extends State<GoalsManagerView> {
       _formValues["data"] = widget.goalsResponse.data;
       _formValues["description"] = widget.goalsResponse.description;
       _formValues["value"] = widget.goalsResponse.value;
-      _textEditingController..text = _formValues["data"].toString();
+      _textEditingController..text = dateFormat.format( _formValues["data"]);
     }
 
     super.initState();
@@ -39,7 +41,7 @@ class _GoalsManagerViewState extends State<GoalsManagerView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Goals Manager View"),
+        title: Text("Gerenciar Meta"),
         actions: [
           IconButton(
               icon: Icon(Icons.save),
@@ -106,7 +108,7 @@ class _GoalsManagerViewState extends State<GoalsManagerView> {
     if (newSelectedDate != null) {
       _formValues["data"] = newSelectedDate;
       _textEditingController
-        ..text = newSelectedDate.toString()
+        ..text = dateFormat.format(newSelectedDate)
         ..selection = TextSelection.fromPosition(TextPosition(
             offset: _textEditingController.text.length,
             affinity: TextAffinity.upstream));

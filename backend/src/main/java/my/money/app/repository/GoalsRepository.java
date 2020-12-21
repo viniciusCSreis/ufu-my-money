@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface GoalsRepository extends JpaRepository<Goal, String> {
-    List<Goal> findAllByUser_Cpf(String cpf);
+    List<Goal> findAllByUser_CpfOrderByDataDesc(String cpf);
     Optional<Goal> findByIdAndUser_Cpf(String id , String cpf);
 }
