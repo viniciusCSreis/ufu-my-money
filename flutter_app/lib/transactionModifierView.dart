@@ -137,8 +137,8 @@ class _TransactionModifierViewState extends State<TransactionModifierView> {
   _selectDate(BuildContext context) async {
     DateTime newSelectedDate = await showDatePicker(
       context: context,
-      initialDate: _selectedDate != null ? _selectedDate : DateTime.now(),
-      firstDate: DateTime.now(),
+      initialDate: _formValues["data"] != null ? _formValues["data"] : DateTime.now(),
+      firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
 
