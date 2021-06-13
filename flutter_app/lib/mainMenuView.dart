@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/listGoalsView.dart';
 import 'package:flutter_app/transactionListerView.dart';
 
+import 'loginView.dart';
+
 class MainMenuView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,19 @@ class MainMenuView extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => TransactionListerView()
+                )
+            );
+          },
+        )
+    );
+    listTiles.add(
+        ListTile(
+          title: Text("Login"),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => LoginView()
                 )
             );
           },
