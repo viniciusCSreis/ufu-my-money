@@ -37,7 +37,7 @@ class GoalsServiceImplTest {
     }
 
     @Test
-    void list() {
+    void listWithSuccess() {
         User logged = new User();
         logged.setUsername("test");
 
@@ -46,7 +46,6 @@ class GoalsServiceImplTest {
         Goal goal1 = new Goal();
         goal1.setId("1");
         goal1.setValue(BigDecimal.valueOf(45.90));
-        goal1.setData(LocalDate.of(2021, 6, 1));
         goal1.setData(LocalDate.of(2021, 6, 1));
         goal1.setDescription("Mensalidade Netflix");
         goal1.setUser(logged);
@@ -57,8 +56,7 @@ class GoalsServiceImplTest {
         goal2.setId("2");
         goal2.setValue(BigDecimal.valueOf(27.90));
         goal2.setData(LocalDate.of(2021, 6, 1));
-        goal2.setData(LocalDate.of(2021, 6, 1));
-        goal2.setDescription("Mensalidade Disney Plus ");
+        goal2.setDescription("Mensalidade Disney Plus");
         goal2.setUser(logged);
         goals.add(goal2);
 
@@ -82,7 +80,7 @@ class GoalsServiceImplTest {
     }
 
     @Test
-    void createSuccess() {
+    void createWithSuccess() {
 
         User logged = new User();
         logged.setUsername("test");
@@ -95,7 +93,6 @@ class GoalsServiceImplTest {
         Goal goal = new Goal();
         goal.setId("1");
         goal.setValue(BigDecimal.valueOf(45.90));
-        goal.setData(LocalDate.of(2021, 6, 1));
         goal.setData(LocalDate.of(2021, 6, 1));
         goal.setDescription("Mensalidade Netflix");
         goal.setUser(logged);
@@ -155,7 +152,7 @@ class GoalsServiceImplTest {
     }
 
     @Test
-    void update() {
+    void updateWithSuccess() {
 
         String id = "1";
 
@@ -172,14 +169,12 @@ class GoalsServiceImplTest {
         goal.setId(id);
         goal.setValue(BigDecimal.valueOf(39.90));
         goal.setData(LocalDate.of(2021, 6, 1));
-        goal.setData(LocalDate.of(2021, 6, 1));
         goal.setDescription("Mensalidade Netflix");
         goal.setUser(logged);
 
         Goal newGoal = new Goal();
         newGoal.setId(id);
         newGoal.setValue(BigDecimal.valueOf(45.90));
-        newGoal.setData(LocalDate.of(2021, 6, 1));
         newGoal.setData(LocalDate.of(2021, 6, 1));
         newGoal.setDescription("Mensalidade Netflix");
         newGoal.setUser(logged);
@@ -237,7 +232,6 @@ class GoalsServiceImplTest {
         Goal goal = new Goal();
         goal.setId(id);
         goal.setValue(BigDecimal.valueOf(39.90));
-        goal.setData(LocalDate.of(2021, 6, 1));
         goal.setData(LocalDate.of(2021, 6, 1));
         goal.setDescription("Mensalidade Netflix");
         goal.setUser(logged);
