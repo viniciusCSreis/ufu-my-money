@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,9 +33,21 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionResponse Create(TransactionRequest request, User logged) {
+        request.setType( request.getType().trim().toUpperCase() );
         Transaction transaction = toEntity(request, logged);
-        transactionRepository.save(transaction);
-        return toResponse(transaction);
+
+        List<String> typs = new ArrayList<>();
+        typs.add("DESPESA");
+        typs.add("RECEITA");
+
+        if(!typs.contains(request.getType())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "type must be DESPESA or RECEITA");
+        } else if (transaction.getValue().compareTo(BigDecimal.ZERO) != 1 ){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "value must be greater then zero");
+        }
+
+        Transaction save = transactionRepository.save(transaction);
+        return toResponse(save);
     }
 
     @Override
