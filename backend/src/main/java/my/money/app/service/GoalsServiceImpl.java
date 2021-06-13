@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,8 +33,11 @@ public class GoalsServiceImpl implements GoalsService {
     @Override
     public GoalsResponse Create(GoalsRequest request, User logged) {
         Goal goal = toEntity(request, logged);
-        goalsRepository.save(goal);
-        return toResponse(goal);
+        if (goal.getValue().compareTo(BigDecimal.ZERO) != 1 ){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "value must be greater then zero");
+        }
+        Goal created = goalsRepository.save(goal);
+        return toResponse(created);
     }
 
     @Override
