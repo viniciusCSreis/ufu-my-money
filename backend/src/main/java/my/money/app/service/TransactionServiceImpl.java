@@ -78,11 +78,11 @@ public class TransactionServiceImpl implements TransactionService {
         typs.add("DESPESA");
         typs.add("RECEITA");
 
-        //if(!typs.contains(request.getType())){
-            //throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "type must be DESPESA or RECEITA");
-        //} else if (request.getValue().compareTo(BigDecimal.ZERO) != 1 ){
-            //throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "value must be greater then zero");
-        //}
+        if(!typs.contains(request.getType())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "type must be DESPESA or RECEITA");
+        } else if (request.getValue().compareTo(BigDecimal.ZERO) != 1 ){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "value must be greater then zero");
+        }
 
         Transaction transaction = new Transaction();
         transaction.setId(UUID.randomUUID().toString());
