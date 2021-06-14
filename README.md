@@ -1,3 +1,13 @@
+# Testes
+
+Teste de integração
+
+ - https://github.com/viniciusCSreis/ufu-my-money/tree/main/backend/src/test/java/my/money/app/controller
+
+Teste unitários:
+
+  - https://github.com/viniciusCSreis/ufu-my-money/tree/main/backend/src/test/java/my/money/app/service
+
 # ufu-my-money
 
 Projeto da disciplina GSI034 - UFU
