@@ -33,9 +33,7 @@ public class GoalsServiceImpl implements GoalsService {
     @Override
     public GoalsResponse Create(GoalsRequest request, User logged) {
         Goal goal = toEntity(request, logged);
-        if (goal.getValue().compareTo(BigDecimal.ZERO) != 1 ){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "value must be greater then zero");
-        }
+
         Goal created = goalsRepository.save(goal);
         return toResponse(created);
     }
@@ -70,6 +68,11 @@ public class GoalsServiceImpl implements GoalsService {
     }
 
     private Goal toEntity(GoalsRequest request, User user) {
+
+        if (request.getValue().compareTo(BigDecimal.ZERO) != 1) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "value must be greater then zero");
+        }
+
         Goal goal = new Goal();
         goal.setId(UUID.randomUUID().toString());
         goal.setDescription(request.getDescription());

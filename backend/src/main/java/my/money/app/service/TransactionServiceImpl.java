@@ -33,18 +33,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionResponse Create(TransactionRequest request, User logged) {
-        request.setType( request.getType().trim().toUpperCase() );
+
         Transaction transaction = toEntity(request, logged);
-
-        List<String> typs = new ArrayList<>();
-        typs.add("DESPESA");
-        typs.add("RECEITA");
-
-        if(!typs.contains(request.getType())){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "type must be DESPESA or RECEITA");
-        } else if (transaction.getValue().compareTo(BigDecimal.ZERO) != 1 ){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "value must be greater then zero");
-        }
 
         Transaction save = transactionRepository.save(transaction);
         return toResponse(save);
@@ -81,6 +71,19 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     private Transaction toEntity(TransactionRequest request, User user) {
+
+        request.setType( request.getType().trim().toUpperCase() );
+
+        List<String> typs = new ArrayList<>();
+        typs.add("DESPESA");
+        typs.add("RECEITA");
+
+        if(!typs.contains(request.getType())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "type must be DESPESA or RECEITA");
+        } else if (request.getValue().compareTo(BigDecimal.ZERO) != 1 ){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "value must be greater then zero");
+        }
+
         Transaction transaction = new Transaction();
         transaction.setId(UUID.randomUUID().toString());
         transaction.setDescription(request.getDescription());

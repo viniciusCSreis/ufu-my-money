@@ -71,14 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private String hashPassword(String pass) {
-        MessageDigest digest = null;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-            return new String(digest.digest(
-                    pass.getBytes(StandardCharsets.UTF_8)));
-        } catch (NoSuchAlgorithmException e) {
-            return "";
-        }
+        return org.apache.commons.codec.digest.DigestUtils.sha256Hex(pass);
     }
 
     private User toEntity(CreateUserRequest request) {
