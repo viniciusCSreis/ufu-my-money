@@ -74,17 +74,33 @@ class _LoginViewState extends State<LoginView> {
                       password: _formValues["password"],
                     );
 
-                    LoginResponse response = await fetcher.login(loginRequest);
+                    try {
+                      LoginResponse response =
+                          await fetcher.login(loginRequest);
+                      await createLoginFile(response);
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      print("loginToken:" + prefs.getString(LOGIN_TOKEN_KEY));
 
-                    await createLoginFile(response);
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    print("loginToken:" + prefs.getString(LOGIN_TOKEN_KEY));
-
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MainMenuView()));
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MainMenuView()));
+                    } catch (error) {
+                      return showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Falha ao fazer Login'),
+                          content: const Text('Usuário ou senha incorreto.'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'OK'),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   },
                   child: Text('Login'),
                 ),

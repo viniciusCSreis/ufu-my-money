@@ -22,26 +22,38 @@ public class GoalsController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/goals")
-    public List<GoalsResponse> List() {
-        return goalsService.List(authService.GetLoggedUser());
+    public List<GoalsResponse> List(
+            @RequestHeader(value = "x-authorization") String token
+    ) {
+        return goalsService.List(authService.GetLoggedUser(token));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/goals")
-    public GoalsResponse Create(@RequestBody GoalsRequest request) {
-        return goalsService.Create(request, authService.GetLoggedUser());
+    public GoalsResponse Create(
+            @RequestHeader(value = "x-authorization") String token,
+            @RequestBody GoalsRequest request
+    ) {
+        return goalsService.Create(request, authService.GetLoggedUser(token));
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/goals/{id}")
-    public GoalsResponse Update(@RequestBody GoalsRequest request, @PathVariable("id") String id) {
-        return goalsService.Update(request, id, authService.GetLoggedUser());
+    public GoalsResponse Update(
+            @RequestHeader(value = "x-authorization") String token,
+            @RequestBody GoalsRequest request,
+            @PathVariable("id") String id
+    ) {
+        return goalsService.Update(request, id, authService.GetLoggedUser(token));
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/goals/{id}")
-    public void Delete(@PathVariable("id") String id) {
-        goalsService.Delete(id, authService.GetLoggedUser());
+    public void Delete(
+            @RequestHeader(value = "x-authorization") String token,
+            @PathVariable("id") String id
+    ) {
+        goalsService.Delete(id, authService.GetLoggedUser(token));
     }
 
 }

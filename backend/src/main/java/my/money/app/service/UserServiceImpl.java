@@ -11,12 +11,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
     SessionRepository sessionRepository;
@@ -29,7 +32,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void Create(CreateUserRequest request) {
         Optional<User> userOptional = userRepository.findById(request.getCpf());
-        if (userOptional.isPresent()){
+        if (userOptional.isPresent()) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "user already exist"
             );
@@ -50,8 +53,8 @@ public class UserServiceImpl implements UserService{
         userOptional.orElseThrow(() -> invalidUserExpection);
         User user = userOptional.get();
 
-        if (!user.getPassword().equals(request.getPassword())){
-           throw invalidUserExpection;
+        if (!user.getPassword().equals(hashPassword(request.getPassword()))) {
+            throw invalidUserExpection;
         }
 
 
@@ -67,11 +70,22 @@ public class UserServiceImpl implements UserService{
 
     }
 
+    private String hashPassword(String pass) {
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+            return new String(digest.digest(
+                    pass.getBytes(StandardCharsets.UTF_8)));
+        } catch (NoSuchAlgorithmException e) {
+            return "";
+        }
+    }
+
     private User toEntity(CreateUserRequest request) {
         User user = new User();
         user.setCpf(request.getCpf());
         user.setUsername(request.getUsername());
-        user.setPassword(request.getPassword());
+        user.setPassword(hashPassword(request.getPassword()));
         user.setEmail(request.getEmail());
         user.setPhoneNumber(request.getPhoneNumber());
         user.setBirthDate(request.getBirthDate());

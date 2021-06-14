@@ -85,7 +85,23 @@ class _CreateUserViewState extends State<CreateUserView> {
                       password: _formValues["password"],
                     );
 
-                    await fetcher.createUser(request);
+                    try{
+                      await fetcher.createUser(request);
+                    }catch(error){
+                      return showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('Falha ao criar usuario'),
+                          content: const Text('Usuário já existe.'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'OK'),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
 
                     Navigator.pushReplacement(
                         context,
