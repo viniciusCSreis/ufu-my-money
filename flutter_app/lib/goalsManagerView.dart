@@ -101,7 +101,7 @@ class _GoalsManagerViewState extends State<GoalsManagerView> {
     DateTime newSelectedDate = await showDatePicker(
       context: context,
       initialDate: _formValues["data"] != null ? _formValues["data"] : DateTime.now(),
-      firstDate: DateTime.now(),
+      firstDate: _formValues["data"] != null ? _formValues["data"] : DateTime.now(),
       lastDate: DateTime(2100),
     );
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/createUserView.dart';
 import 'package:flutter_app/listGoalsView.dart';
+import 'package:flutter_app/loginView.dart';
 
 import 'mainMenuView.dart';
 
@@ -17,7 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MainMenuView(),
+      home: LoginView(),
     );
   }
 }

@@ -1,0 +1,1 @@
+const LOGIN_TOKEN_KEY = "login_token";

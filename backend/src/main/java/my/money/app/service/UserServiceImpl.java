@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void Create(CreateUserRequest request) {
-        Optional<User> userOptional = userRepository.findByUsername(request.getUsername());
+        Optional<User> userOptional = userRepository.findById(request.getCpf());
         if (userOptional.isPresent()){
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "user already exist"

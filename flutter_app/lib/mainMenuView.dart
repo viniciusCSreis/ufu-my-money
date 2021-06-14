@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/const.dart';
+import 'package:flutter_app/createUserView.dart';
 import 'package:flutter_app/listGoalsView.dart';
 import 'package:flutter_app/transactionListerView.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'loginView.dart';
 
@@ -37,14 +40,13 @@ class MainMenuView extends StatelessWidget {
     );
     listTiles.add(
         ListTile(
-          title: Text("Login"),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => LoginView()
-                )
-            );
+          title: Text("Logout"),
+          onTap: () async {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setString(LOGIN_TOKEN_KEY, "");
+
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => LoginView()));
           },
         )
     );
