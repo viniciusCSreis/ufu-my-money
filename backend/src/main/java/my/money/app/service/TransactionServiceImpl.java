@@ -72,11 +72,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     private Transaction toEntity(TransactionRequest request, User user) {
 
-        request.setType( request.getType().trim().toUpperCase() );
-
         List<String> typs = new ArrayList<>();
-        typs.add("DESPESA");
-        typs.add("RECEITA");
+        typs.add("Despesa");
+        typs.add("Receita");
 
         if(!typs.contains(request.getType())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "type must be DESPESA or RECEITA");

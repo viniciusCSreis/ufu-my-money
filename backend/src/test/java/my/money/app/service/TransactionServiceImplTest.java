@@ -105,14 +105,14 @@ class TransactionServiceImplTest {
         TransactionRequest request = new TransactionRequest();
         request.setValue(BigDecimal.valueOf(45.90));
         request.setDescription("Mensalidade Netflix");
-        request.setType("DESPESA");
+        request.setType("Despesa");
         request.setData(LocalDate.of(2021, 6, 1));
 
         Transaction transaction = new Transaction();
         transaction.setId("1");
         transaction.setValue(BigDecimal.valueOf(45.90));
         transaction.setDescription("Mensalidade Netflix");
-        transaction.setType("DESPESA");
+        transaction.setType("Despesa");
         transaction.setData(LocalDate.of(2021, 6, 1));
         transaction.setUser(logged);
 
@@ -138,7 +138,7 @@ class TransactionServiceImplTest {
         TransactionRequest request = new TransactionRequest();
         request.setValue(BigDecimal.ZERO);
         request.setDescription("Mensalidade Netflix");
-        request.setType("DESPESA");
+        request.setType("Despesa");
         request.setData(LocalDate.of(2021, 6, 1));
 
         ResponseStatusException exception = assertThrows(
@@ -157,7 +157,7 @@ class TransactionServiceImplTest {
         TransactionRequest request = new TransactionRequest();
         request.setValue(BigDecimal.valueOf(-1.5));
         request.setDescription("Mensalidade Netflix");
-        request.setType("DESPESA");
+        request.setType("Despesa");
         request.setData(LocalDate.of(2021, 6, 1));
 
         ResponseStatusException exception = assertThrows(
@@ -217,14 +217,14 @@ class TransactionServiceImplTest {
         TransactionRequest request = new TransactionRequest();
         request.setValue(BigDecimal.valueOf(45.90));
         request.setDescription("Mensalidade Netflix");
-        request.setType("DESPESA");
+        request.setType("Despesa");
         request.setData(LocalDate.of(2021, 6, 1));
 
         Transaction transaction = new Transaction();
         transaction.setId(id);
         transaction.setValue(BigDecimal.valueOf(39.90));
         transaction.setDescription("Mensalidade Net");
-        transaction.setType("DESPESA");
+        transaction.setType("Despesa");
         transaction.setData(LocalDate.of(2021, 6, 1));
         transaction.setUser(logged);
 
@@ -232,7 +232,7 @@ class TransactionServiceImplTest {
         newTransaction.setId(id);
         newTransaction.setValue(BigDecimal.valueOf(45.90));
         newTransaction.setDescription("Mensalidade Netflix");
-        newTransaction.setType("DESPESA");
+        newTransaction.setType("Despesa");
         newTransaction.setData(LocalDate.of(2021, 6, 1));
         newTransaction.setUser(logged);
 
@@ -263,7 +263,7 @@ class TransactionServiceImplTest {
         TransactionRequest request = new TransactionRequest();
         request.setValue(BigDecimal.valueOf(45.90));
         request.setDescription("Mensalidade Netflix");
-        request.setType("DESPESA");
+        request.setType("Despesa");
         request.setData(LocalDate.of(2021, 6, 1));
 
 
@@ -291,7 +291,7 @@ class TransactionServiceImplTest {
         transaction.setId(id);
         transaction.setValue(BigDecimal.valueOf(45.90));
         transaction.setDescription("Mensalidade Netflix");
-        transaction.setType("DESPESA");
+        transaction.setType("Despesa");
         transaction.setData(LocalDate.of(2021, 6, 1));
         transaction.setUser(logged);
 
